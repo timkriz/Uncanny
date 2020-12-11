@@ -1,0 +1,55 @@
+body {
+  margin:0px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  text-align: center;
+  background-color: black;
+}
+html {
+  height: 100%;
+}
+body {
+  min-height: 100%;
+}
+a {
+  color: #00B7FF;
+}
+
+
+.p5Canvas {
+  position: fixed;
+  top:0;
+  left: 0;
+  z-index: -1;
+}
+
+#text1 {
+	position: absolute;
+  top: 25px;
+	width: 100%;
+  text-align: center;
+  color : #ffffff;
+	z-index: 100;
+  display:block;
+  font-size: 17px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#text2 {
+	position: absolute;
+  bottom: 35px;
+	width: 100%;
+  text-align: center;
+  color : #ffffff;
+	z-index: 100;
+  display:block;
+  font-size: 17px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pUncanny {
+  background: black;
+  width: fit-content;
+}

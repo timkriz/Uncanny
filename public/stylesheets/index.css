@@ -1,0 +1,54 @@
+@font-face {
+    font-family: aktivGrotesk;
+    src: url(aktiv-grotesk-w01.ttf);
+  }
+
+.contain {
+    padding-left: 15px;
+    padding-right: 15px;
+    height: 100vh;
+}
+.menu {
+    margin:10px;
+    font-size: 1.4em;
+    font-family: aktivGrotesk, Arial, Helvetica, sans-serif;
+    padding-bottom: 20px;
+}
+.intro_button{
+    text-decoration: none;
+    color: black;
+}
+#info_button{
+    float: right;
+}
+#enter_button_contain{
+    color: black;
+    padding: 10px;
+    padding-top: 100px;
+    text-align: center;
+}
+#enter_button {
+    font-size: 1.2em;
+    text-decoration: none;
+    color: white;
+    background-color: black;
+    border: solid black 1px;
+    padding: 7px;
+    transition: 0.8s;
+}
+#enter_button:hover {
+    color: black;
+    background-color: white;
+}
+
+#intro_section{
+    padding:10px;
+    padding-bottom: 20px;
+    font-family: aktivGrotesk, Arial, Helvetica, sans-serif;
+}
+#intro_text{
+    color:black;
+    font-size: 1.5em;
+    padding-top: 30px;
+    text-align: center;
+}
