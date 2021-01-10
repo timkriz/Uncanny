@@ -1,4 +1,4 @@
-javascript:(function(){var script=document.createElement('script');script.onload=function(){var stats=new Stats();document.body.appendChild(stats.dom);requestAnimationFrame(function loop(){stats.update();requestAnimationFrame(loop)});};script.src='//mrdoob.github.io/stats.js/build/stats.min.js';document.head.appendChild(script);})()
+//javascript:(function(){var script=document.createElement('script');script.onload=function(){var stats=new Stats();document.body.appendChild(stats.dom);requestAnimationFrame(function loop(){stats.update();requestAnimationFrame(loop)});};script.src='//mrdoob.github.io/stats.js/build/stats.min.js';document.head.appendChild(script);})()
 let ctx, videoWidth, videoHeight, video, canvas, rafID;
 let predictionsGlobal = [];
 const VIDEO_SIZE = 500;
@@ -27,7 +27,7 @@ async function setupCamera() {
 
 async function renderPrediction() {
     //const options = new faceapi.SsdMobilenetv1Options({ minConfidence: 0.5, maxResults:1 })
-    const options = new faceapi.TinyFaceDetectorOptions({ inputSize: 128 }) //128 or 160
+    const options = new faceapi.TinyFaceDetectorOptions({ inputSize: 160 }) //128 or 160
     const result = await faceapi.detectSingleFace(video, options).withFaceLandmarks(true)
 
     if (result) {
