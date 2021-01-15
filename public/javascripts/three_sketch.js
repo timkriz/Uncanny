@@ -14,6 +14,7 @@ var hueHead = 0;
 
 let mouthOPEN;
 let headROLL;
+
 /* Storyline variables */
 let modelInSceneSwitch = 0;
 let uncannyStarting = 1;
@@ -22,6 +23,7 @@ let button1, button2, button3;
 let toggleVideoEl = 0;
 let toggleAudioEl = 0;
 let toggleTravelTransition = 0;
+let switchToTravelPage = 0;
 
 let facePositions1;
 let faceDotsArray = [];
@@ -29,21 +31,6 @@ let faceDotsArrayLeft = [];
 
 const animate = function () {
     requestAnimationFrame( animate );
-    /*if(canvasSwitch == 0) requestAnimationFrame( animate );
-    if (canvasSwitch == 1) {
-        var elText1 = document.getElementById("text1"); 
-        var elText2 = document.getElementById("text2");  // Get the <ul> element with id="myList"
-        elText1.remove();
-        elText2.remove();
-        document.body.removeChild( renderer.domElement );
-
-        var y =document.createElement('script');
-        y.src = "https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.min.js";
-        document.body.appendChild(y)
-        var x = document.createElement("script");
-        x.src = "javascripts/sketch.js";
-        document.body.appendChild(x)
-    }*/
     if(predictionsGlobal.length>1 && !modelInSceneSwitch) {
         scene.add( modelHead ); 
         modelInSceneSwitch = 1;
@@ -57,8 +44,6 @@ const animate = function () {
         }
     }
     if(animatedMesh && predictionsGlobal.length>1){
-        //console.log(animatedMesh)
-
         /* opened mouth */
         var a = predictionsGlobal[66].x - predictionsGlobal[62].x;
         var b = predictionsGlobal[66].y - predictionsGlobal[62].y;
@@ -85,8 +70,10 @@ const animate = function () {
             animatedMesh.scale.x *= 1.01; animatedMesh.scale.y *= 1.01; animatedMesh.scale.z *= 1.01
             animatedMeshEyes.scale.x *= 1.01; animatedMeshEyes.scale.y *= 1.01; animatedMeshEyes.scale.z *= 1.01
 
-            //console.log("sdsd: ",  animatedMesh.rotation.z)
-            if(animatedMesh.rotation.z > 0.9) window.location.href = "/travel";
+            if(animatedMesh.rotation.z > 0.9 && switchToTravelPage == 0) {
+                window.location.href = "/travel";
+                switchToTravelPage = 1;
+            }
         }
     
         /* eyebrows */
@@ -121,12 +108,6 @@ const animate = function () {
 };
 
 window.addEventListener( 'resize', onWindowResize, false );
-/*window.addEventListener('resize', () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth/4, window.innerHeight/2);
-    //render();
-}, false);*/
 
 function onWindowResize(){
     //var width, height;
@@ -176,10 +157,6 @@ function setupThree(){
     startIntro();
 
     for(var i = 0; i< 68; i++){
-        /*var dotGeometry = new THREE.Geometry();
-        dotGeometry.vertices.push(new THREE.Vector3( 0, 0, 0));
-        var dotMaterial = new THREE.PointsMaterial( { size: 1, sizeAttenuation: false, color: 0x35FF69} );
-        var dot = new THREE.Points( dotGeometry, dotMaterial );*/
         var geometry = new THREE.CircleBufferGeometry( 1.1, 5 );
         var dotMaterial = new THREE.MeshBasicMaterial({ color: 0xeeeeee} );
         var dot1 = new THREE.Mesh( geometry, dotMaterial );
@@ -216,7 +193,7 @@ function onDocumentMouseDown( e ) {
             if(firstIntersectedObject.object.name == "button1") {
                 toggleAudioEl = 1;
                 document.getElementById('audiotag1').play();
-                scene.getObjectByName("button1").material.color = new THREE.Color( 0x35FF69 );
+                scene.getObjectByName("button1").material.color = new THREE.Color( 0x44CCFF );
             }
         }
         else {
@@ -231,7 +208,7 @@ function onDocumentMouseDown( e ) {
             if(firstIntersectedObject.object.name == "button2") {
                 toggleVideoEl = 1;
                 drawVideoElement();
-                scene.getObjectByName("button2").material.color = new THREE.Color( 0x35FF69 );
+                scene.getObjectByName("button2").material.color = new THREE.Color( 0x44CCFF );
                 if(faceDotsArray){
                     for(var i = 17; i< faceDotsArray.length; i++){
                         scene.add( faceDotsArray[i] );
@@ -260,6 +237,7 @@ function onDocumentMouseDown( e ) {
         }
         if(firstIntersectedObject.object.name == "button3") {
             toggleTravelTransition = 1;
+            scene.getObjectByName("button3").material.color = new THREE.Color( 0x44CCFF );
             //window.location.href = "/travel";
         }
     }
@@ -333,36 +311,17 @@ function drawVideoElement(){
     border1.position.set(width3/2 - 200, 0, -901);
     imageObject1.attach(border1);
     scene.add( imageObject1 );
-
-    /* left */
-    /*var imageObject2 = new THREE.Mesh(
-        new THREE.PlaneGeometry(250, 250),
-        new THREE.MeshBasicMaterial({ map: texture }),);
-    imageObject2.position.set(-(width3/2 - 200), 0, -900);
-    imageObject2.layers.set(1);
-    imageObject2.name= "videoObject2";
-
-    /* border 
-    var border2 = new THREE.Mesh(
-        new THREE.PlaneGeometry(253, 253),
-        new THREE.MeshBasicMaterial({ color: 0xdddddd }));
-    border2.position.set(-(width3/2 - 200), 0, -901);
-    imageObject2.attach(border2);
-    scene.add( imageObject2 );*/
 }
 function drawDotsOnVideoEl(){
     for(var i = 17; i< faceDotsArray.length; i++){
         var positionX = predictionsGlobal[i].x;
-        /*mirror x*/
+        /*mirror*/
         positionX = positionX-250;
         positionX = positionX*-1;
         var positionY = -predictionsGlobal[i].y + 250;
         positionX = positionX*0.5; positionY = positionY*0.5;
         positionX1 = positionX+ ((width3/2) - 200);
         faceDotsArray[i].position.set(positionX1, positionY, -100);
-
-        /*positionX2 = positionX -  ((width3/2) - 200);
-        faceDotsArrayLeft[i].position.set(positionX2, positionY, -100);*/
     }
 }
 
@@ -391,9 +350,6 @@ function startIntro(){
     scene.add(boxTextMesh);
    
 }
-
-
-
 
 
 // GLTF MODEL

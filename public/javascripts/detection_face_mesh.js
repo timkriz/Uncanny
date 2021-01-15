@@ -1,11 +1,5 @@
 javascript:(function(){var script=document.createElement('script');script.onload=function(){var stats=new Stats();document.body.appendChild(stats.dom);requestAnimationFrame(function loop(){stats.update();requestAnimationFrame(loop)});};script.src='//mrdoob.github.io/stats.js/build/stats.min.js';document.head.appendChild(script);})()
 
-const NUM_KEYPOINTS = 468;
-const NUM_IRIS_KEYPOINTS = 5;
-const GREEN = '#32EEDB';
-const RED = "#FF2C35";
-const BLUE = "#157AB3";
-
 function distance(a, b) {
   return Math.sqrt(Math.pow(a[0] - b[0], 2) + Math.pow(a[1] - b[1], 2));
 }
@@ -30,7 +24,7 @@ let model, ctx, videoWidth, videoHeight, video, canvas, UVcoords,
 /***ARRAY OF PREDICITIONS  ***/
 let predictionsGlobal;
 
-const VIDEO_SIZE = 300;//(document.getElementById('window2').offsetWidth-16)*2 +8;
+const VIDEO_SIZE = 300;
 
 
 async function setupCamera() {
